@@ -4,11 +4,14 @@ const app = express();
 // Middleware para registrar detalles de la solicitud
 app.use((req, res, next) => {
     const currentDate = new Date();
+
+    // Obtener la IP real del cliente desde el encabezado `X-Forwarded-For` o usar `req.ip`
+    const ip = req.headers['x-forwarded-for'] || req.ip;
     
     console.log(`--- Nueva solicitud ---`);
     console.log(`Método: ${req.method}`);
     console.log(`URL: ${req.url}`);
-    console.log(`IP del cliente: ${req.ip}`);
+    console.log(`IP del cliente: ${ip}`);
     console.log(`Fecha y hora de la solicitud: ${currentDate.toISOString()}`);
     console.log(`Navegador y sistema operativo: ${req.headers['user-agent']}`);
     console.log(`Tipo de contenido esperado: ${req.headers['accept']}`);
